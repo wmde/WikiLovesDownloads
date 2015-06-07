@@ -1,0 +1,19 @@
+{
+	"name": "WikiLovesDownloads",
+	"description": "Download helper for grabbing file from The Commons",
+	"keywords": ["commons", "downloader"],
+	"authors": [
+		{
+			"name": "Kai Nissen (WMDE)"
+		}
+	],
+	"license": "GPL-2.0+",
+	"require": {
+		"addwiki/mediawiki-api": "0.3"
+	},
+	"autoload": {
+		"psr-4": {
+			"": "src/"
+		}
+	}
+}
