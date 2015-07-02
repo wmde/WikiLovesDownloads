@@ -1,30 +1,30 @@
 #container {
-    border: 1px solid #555555; /*4px for a thicker border - optional*/
+    border: 1px solid #555555;
     margin: 30px auto 0 auto;
     padding: 0 20px 0 20px;
-    width: 700px; /*550px*/
+    width: 700px;
 }
 
-h1 {
+header {
     margin: 20px 0 0 0;
+    font-weight: bold;
     font-size: 40px;
     color: #555555;
 }
 
-h5 {
+p {
     margin: 1px 0 0 0;
-    font-weight: normal;
     font-size: 16px;
     color: #555555;
 }
 
 #errorBox {
-    border: 1px solid firebrick; /*Color used to be e84e4f*/
-    margin: 20px 0 0 0; /*Bottom Padding Changed From 30px to 20px*/
+    border: 1px solid firebrick;
+    margin: 20px 0 0 0;
     border-radius: 5px;
-    color: firebrick; /*Color used to be e84e4f*/
+    color: firebrick;
     display: none;
-    width: 565px; /*475*/
+    width: 565px;
     height: auto;
 }
 
@@ -34,7 +34,7 @@ h5 {
 }
 
 #form {
-    margin: 20px 0 30px 0; /*Top Padding Changed From 30px to 20px*/
+    margin: 20px 0 30px 0;
 }
 
 #form div {
@@ -45,7 +45,6 @@ h5 {
     font-size: 16px;
     display: block;
     color: #555555;
-    /*margin-left: 10px;*/
 }
 
 #form div input {
@@ -75,26 +74,14 @@ h5 {
 }
 
 .number input {
-    width: 120px;
+    width: 140px;
     height: 27px;
-}
-
-.names {
-
-}
-
-.names input {
-
 }
 
 ul.tagit {
     border: 1px solid lightgray;
     margin-top: 0;
-    width: 563px;
-}
-
-.submit {
-
+    width: 583px;
 }
 
 .submit input {
