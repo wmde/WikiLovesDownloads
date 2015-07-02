@@ -21,11 +21,11 @@
             var names = document.getElementById( "names-list" ).value;
             var errorBox = document.getElementById( "errorBox" );
 
-            if (category == "" || number == "") {
+            if ( category === "" || number === "" ) {
                 $( "#errorBox" ).css({ "display": "block" });
                 $( ".errorMessage" ).remove();
 
-                if ( category == "" ) {
+                if ( category === "" ) {
                     var errorFieldCategory = document.getElementById( "errorBox" );
                     var elementCategory = document.createElement( "p" );
                     elementCategory.textContent = "- Die Kategorie darf nicht leer sein!";
@@ -33,7 +33,7 @@
                     errorFieldCategory.appendChild( elementCategory );
                 }
 
-                if ( number == "" ) {
+                if ( number === "" ) {
                     var errorFieldNumber = document.getElementById( "errorBox" );
                     var elementNumber = document.createElement( "p" );
                     elementNumber.textContent = "- Die Nummer darf nicht leer sein!";
