@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+
+<html>
+
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Wiki Loves Downloader</title>
+
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="plugins/tagit/css/jquery.tagit.css">
+    <link rel="stylesheet" type="text/css" href="plugins/tagit/css/tagit.ui-zendesk.css">
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.12/jquery-ui.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="plugins/tagit/js/tag-it.js" type="text/javascript" charset="utf-8"></script>
+
+    <script type="text/javascript">
+        function check() {
+            var category = document.getElementById( "category-title" ).value;
+            var number = document.getElementById( "list-quantity" ).value;
+            var names = document.getElementById( "names-list" ).value;
+            var errorBox = document.getElementById( "errorBox" );
+
+            if (category == "" || number == "") {
+                $( "#errorBox" ).css({ "display": "block" });
+                $( ".errorMessage" ).remove();
+
+                if ( category == "" ) {
+                    var errorFieldCategory = document.getElementById( "errorBox" );
+                    var elementCategory = document.createElement( "p" );
+                    elementCategory.textContent = "- Die Kategorie darf nicht leer sein!";
+                    elementCategory.className = "errorMessage";
+                    errorFieldCategory.appendChild( elementCategory );
+                }
+
+                if ( number == "" ) {
+                    var errorFieldNumber = document.getElementById( "errorBox" );
+                    var elementNumber = document.createElement( "p" );
+                    elementNumber.textContent = "- Die Nummer darf nicht leer sein!";
+                    elementNumber.className = "errorMessage";
+                    errorFieldNumber.appendChild( elementNumber );
+                }
+
+                return false;
+            } else {
+                return true;
+            }
+        }
+    </script>
+</head>
+
+<body>
+
+<div id="container">
+
+    <h1>Wiki Loves Downloader</h1>
+    <h5>Teilt die Bilder einer kategorie entsprechend der Anzahl Juroren auf und generiert Textdatein mit Links zur Verwendung in einem Downloadmanager.</h5>
+
+    <div id="errorBox">
+    </div>
+
+    <form action="php/initial.php" method="POST" id="form">
+
+        <div class="category">
+            <span>Kategorie (z.B.: <i>Wiki Loves Monuments 2015</i>)</span>
+            <input type="text" name="category-title" id="category-title">
+        </div>
+
+        <div class="number">
+            <span>Anzahl Juroren</span>
+            <input type="number" name="list-quantity" id="list-quantity" min="1" max="100"> <!-- value="1" -->
+        </div>
+
+        <div class="names">
+            <span>Auszusortierende Benutzernamen</span>
+
+            <script type="text/javascript">
+                $( document ).ready(function() {
+                    $( "#names-list" ).tagit();
+                });
+            </script>
+
+            <input type="hidden" name="names" id="names-list" value="Andrew"> <!-- removed array attribute-->
+        </div>
+
+        <div class="submit">
+            <input type="submit" id="submit" value="Download-Listen Generieren" onclick="return check();">
+        </div>
+
+    </form>
+
+</div>
+
+</body>
+
+</html>

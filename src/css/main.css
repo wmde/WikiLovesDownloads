@@ -1,0 +1,103 @@
+#container {
+    border: 1px solid #555555; /*4px for a thicker border - optional*/
+    margin: 30px auto 0 auto;
+    padding: 0 20px 0 20px;
+    width: 700px; /*550px*/
+}
+
+h1 {
+    margin: 20px 0 0 0;
+    font-size: 40px;
+    color: #555555;
+}
+
+h5 {
+    margin: 1px 0 0 0;
+    font-weight: normal;
+    font-size: 16px;
+    color: #555555;
+}
+
+#errorBox {
+    border: 1px solid firebrick; /*Color used to be e84e4f*/
+    margin: 20px 0 0 0; /*Bottom Padding Changed From 30px to 20px*/
+    border-radius: 5px;
+    color: firebrick; /*Color used to be e84e4f*/
+    display: none;
+    width: 565px; /*475*/
+    height: auto;
+}
+
+.errorMessage {
+    margin: 5px 0 5px 0;
+    text-align: center;
+}
+
+#form {
+    margin: 20px 0 30px 0; /*Top Padding Changed From 30px to 20px*/
+}
+
+#form div {
+    margin-bottom: 20px;
+}
+
+#form div span {
+    font-size: 16px;
+    display: block;
+    color: #555555;
+    /*margin-left: 10px;*/
+}
+
+#form div input {
+    display: block;
+}
+
+#form .category input {
+    border: 1px solid lightgray;
+}
+
+#form .number input {
+    border: 1px solid lightgray;
+}
+
+.category {
+    display: inline-block;
+    margin-right: 40px;
+}
+
+.category input {
+    width: 400px;
+    height: 27px;
+}
+
+.number {
+    display: inline-block;
+}
+
+.number input {
+    width: 120px;
+    height: 27px;
+}
+
+.names {
+
+}
+
+.names input {
+
+}
+
+ul.tagit {
+    border: 1px solid lightgray;
+    margin-top: 0;
+    width: 563px;
+}
+
+.submit {
+
+}
+
+.submit input {
+    border: 1px solid lightgray;
+    height: 40px;
+}
