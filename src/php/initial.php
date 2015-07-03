@@ -25,17 +25,26 @@ if ( defined( 'API_USER' ) && defined( 'API_PASSWORD' ) ) {
 $wld->loadCategoryMembers( $downloadCategory );
 $wld->processImages();
 
-array_map( 'unlink', glob( '../*.zip' ) );
+$writableDir = '../writable/';
+$zipDeletionList = scandir( $writableDir );
 
-$date = new DateTime();
-$stamp = $date->format( 'HisdmY' );
+foreach ( $zipDeletionList as $file ) {
+	$currentTime = time();
+	$fileTime = (int)filemtime( '../writable/' . $file ) + 3600000;
 
-$tempPath = '../temp' . $stamp;
+	if ( $currentTime > $fileTime ) {
+		unlink( '../writable/' . $file );
+	}
+}
+
+$stamp = uniqid();
+
+$tempPath = '../writable/temp' . $stamp;
 mkdir( $tempPath );
 
 $zip = new ZipArchive;
 $zipName = 'WLD-' . $stamp . '.zip';
-$zipPath = '../' . $zipName;
+$zipPath = '../writable/' . $zipName;
 
 $zipCreate = fopen( $zipPath, 'w' );
 fclose( $zipCreate );
