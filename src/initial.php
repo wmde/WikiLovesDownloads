@@ -28,18 +28,18 @@ if ( defined( 'API_USER' ) && defined( 'API_PASSWORD' ) ) {
 $wld->loadCategoryMembers( $downloadCategory );
 $wld->processImages();
 
-$create->delete();
+$create->cleanUp();
 
 $urlLists = $wld->getUrls( $listQuantity );
 
-$create->create();
+$create->zipCreate();
 
 foreach ( $urlLists as $key => $urls ) {
 	$content = implode( "\n", $urls );
 	$fileName = $wld->getListFilename( $key, 1 );
-	$create->zip( $fileName, $content );
+	$create->zipFiles( $fileName, $content );
 }
 
-$create->finish();
+$create->download();
 
 
