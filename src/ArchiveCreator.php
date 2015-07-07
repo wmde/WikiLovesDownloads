@@ -2,6 +2,11 @@
 
 class ArchiveCreator {
 
+	private $zipName;
+	private $zipPath;
+	private $tempPath;
+	private $zip;
+
 	public function delete() {
 		$writableDir = '../writable/';
 		$zipDeletionList = scandir( $writableDir );
@@ -21,40 +26,34 @@ class ArchiveCreator {
 	}
 
 	public function create() {
-		global $zip, $zipName, $zipPath, $tempPath;
-
 		$stamp = uniqid();
 
 		$tempPath = '../writable/temp' . $stamp;
 		mkdir( $tempPath );
 
-		$zip = new ZipArchive;
-		$zipName = 'WLD-' . $stamp . '.zip';
-		$zipPath = '../writable/' . $zipName;
+		$this->zip = new ZipArchive;
+		$this->zipName = 'WLD-' . $stamp . '.zip';
+		$this->zipPath = '../writable/' . $this->zipName;
 
-		$zipCreate = fopen( $zipPath, 'w' );
+		$zipCreate = fopen( $this->zipPath, 'w' );
 		fclose( $zipCreate );
 	}
 
 	public function zip( $fileName, $content ) {
-		global $zip, $zipPath, $tempPath;
-
-		$filePath = $tempPath . $fileName;
+		$filePath = $this->tempPath . $fileName;
 		file_put_contents( $filePath, $content );
-		$zip->open( $zipPath );
-		$zip->addFile( $filePath, $fileName );
-		$zip->close();
+		$this->zip->open( $this->zipPath );
+		$this->zip->addFile( $filePath, $fileName );
+		$this->zip->close();
 		unlink( $filePath );
 	}
 
 	public function finish() {
-		global $tempPath, $zipPath, $zipName;
-
-		rmdir( $tempPath );
+		rmdir( $this->tempPath );
 		header( 'Content-Type: application/zip' );
-		header( 'Content-Disposition: attachment; filename=' . $zipName );
-		header( 'Content-Length: ' . filesize( $zipPath ) );
-		header( 'Location: ' . $zipPath );
+		header( 'Content-Disposition: attachment; filename=' . $this->zipName );
+		header( 'Content-Length: ' . filesize( $this->zipPath ) );
+		header( 'Location: ' . $this->zipPath );
 	}
 
 }
