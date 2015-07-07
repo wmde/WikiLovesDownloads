@@ -28,16 +28,21 @@ class ArchiveCreator {
 	}
 
 	public function create() {
-		$stamp = uniqid();
+		$this->name();
 
-		$this->tempPath = '../writable/temp' . $stamp;
 		mkdir( $this->tempPath );
-
-		$this->zipName = 'WLD-' . $stamp . '.zip';
-		$this->zipPath = '../writable/' . $this->zipName;
 
 		$zipCreate = fopen( $this->zipPath, 'w' );
 		fclose( $zipCreate );
+	}
+
+	private function name() {
+		$stamp = uniqid();
+
+		$this->tempPath = '../writable/temp' . $stamp;
+
+		$this->zipName = 'WLD-' . $stamp . '.zip';
+		$this->zipPath = '../writable/' . $this->zipName;
 	}
 
 	public function zip( $fileName, $content ) {
