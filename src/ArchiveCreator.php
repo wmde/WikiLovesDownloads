@@ -31,7 +31,6 @@ class ArchiveCreator {
 		$tempPath = '../writable/temp' . $stamp;
 		mkdir( $tempPath );
 
-		$this->zip = new ZipArchive;
 		$this->zipName = 'WLD-' . $stamp . '.zip';
 		$this->zipPath = '../writable/' . $this->zipName;
 
@@ -42,6 +41,7 @@ class ArchiveCreator {
 	public function zip( $fileName, $content ) {
 		$filePath = $this->tempPath . $fileName;
 		file_put_contents( $filePath, $content );
+		$this->zip = new ZipArchive;
 		$this->zip->open( $this->zipPath );
 		$this->zip->addFile( $filePath, $fileName );
 		$this->zip->close();
