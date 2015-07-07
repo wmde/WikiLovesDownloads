@@ -15,12 +15,14 @@ class ArchiveCreator {
 			$currentTime = time();
 			$fileTime = (int)filemtime( '../writable/' . $file ) + 3600;
 
-			if ( $currentTime > $fileTime ) {
-				if ( $file === '.' || $file === '..' ) {
+			$this->check( $currentTime, $fileTime, $file );
+		}
+	}
 
-				} else {
-					unlink( '../writable/' . $file );
-				}
+	private function check( $currentTime, $fileTime, $file ) {
+		if ( $currentTime > $fileTime ) {
+			if ( $file !== '.' && $file !== '..' ) {
+				unlink( '../writable/' . $file );
 			}
 		}
 	}
@@ -28,8 +30,8 @@ class ArchiveCreator {
 	public function create() {
 		$stamp = uniqid();
 
-		$tempPath = '../writable/temp' . $stamp;
-		mkdir( $tempPath );
+		$this->tempPath = '../writable/temp' . $stamp;
+		mkdir( $this->tempPath );
 
 		$this->zipName = 'WLD-' . $stamp . '.zip';
 		$this->zipPath = '../writable/' . $this->zipName;
