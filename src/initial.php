@@ -6,7 +6,7 @@ require_once '../vendor/autoload.php';
 
 include 'config.php';
 include 'WikiLovesDownloads.php';
-include 'creation.php';
+include 'ArchiveCreator.php';
 
 if ( !defined( 'API_URL' ) ) {
 	print 'API service URL not defined.';
@@ -19,7 +19,7 @@ $userFilter = explode( ',' , $_POST[ 'names' ] );
 $downloadCategory = "category:" . $category;
 
 $wld = new WikiLovesDownloads( $userFilter );
-$create = new creation();
+$create = new ArchiveCreator();
 
 if ( defined( 'API_USER' ) && defined( 'API_PASSWORD' ) ) {
 	$wld->doApiLogin( API_USER, API_PASSWORD );

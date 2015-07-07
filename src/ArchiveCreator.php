@@ -1,6 +1,6 @@
 <?php
 
-class creation {
+class ArchiveCreator {
 
 	public function delete() {
 		$writableDir = '../writable/';
