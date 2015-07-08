@@ -37,7 +37,7 @@ $create->zipCreate();
 foreach ( $urlLists as $key => $urls ) {
 	$content = implode( "\n", $urls );
 	$fileName = $wld->getListFilename( $key, 1 );
-	$create->zipFiles( $fileName, $content );
+	$create->addFiles( $fileName, $content );
 }
 
 $create->download();

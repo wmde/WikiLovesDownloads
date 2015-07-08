@@ -4,7 +4,6 @@ class ArchiveCreator {
 
 	private $zipName;
 	private $zipPath;
-	private $tempPath;
 	private $zip;
 
 	public function cleanUp() {
@@ -20,47 +19,29 @@ class ArchiveCreator {
 	}
 
 	private function checkRemove( $currentTime, $fileTime, $file ) {
-		if ( $currentTime > $fileTime ) {
-			if ( $file !== '.' && $file !== '..' ) {
+		if ( $currentTime > $fileTime && $file !== '.' && $file !== '..' ) {
 				unlink( '../writable/' . $file );
-			}
 		}
 	}
 
 	public function zipCreate() {
 		$this->setName();
-
-		mkdir( $this->tempPath );
 		$this->zip = new ZipArchive;
-
-		$zipCreate = fopen( $this->zipPath, 'w' );
-		fclose( $zipCreate );
+		$this->zip->open( $this->zipPath, ZipArchive::CREATE );
 	}
 
 	private function setName() {
 		$stamp = uniqid();
-
-		$this->tempPath = '../writable/temp' . $stamp;
-
 		$this->zipName = 'WLD-' . $stamp . '.zip';
 		$this->zipPath = '../writable/' . $this->zipName;
 	}
 
-	public function zipFiles( $fileName, $content ) {
-		$filePath = $this->tempPath . $fileName;
-		file_put_contents( $filePath, $content );
-		$this->addFiles( $filePath, $fileName );
-		unlink( $filePath );
-	}
-
-	private function addFiles( $filePath, $fileName ) {
-		$this->zip->open( $this->zipPath );
-		$this->zip->addFile( $filePath, $fileName );
-		$this->zip->close();
+	public function addFiles( $fileName, $content  ) {
+		$this->zip->addFromString( $fileName, $content );
 	}
 
 	public function download() {
-		rmdir( $this->tempPath );
+		$this->zip->close();
 		header( 'Content-Type: application/zip' );
 		header( 'Content-Disposition: attachment; filename=' . $this->zipName );
 		header( 'Content-Length: ' . filesize( $this->zipPath ) );
