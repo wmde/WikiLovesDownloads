@@ -4,6 +4,8 @@ class ArchiveCreator {
 
 	private $zipName;
 	private $zipPath;
+
+	/** @var ZipArchive */
 	private $zip;
 
 	public function cleanUp() {
@@ -36,7 +38,7 @@ class ArchiveCreator {
 		$this->zipPath = '../writable/' . $this->zipName;
 	}
 
-	public function addFiles( $fileName, $content  ) {
+	public function addFiles( $fileName, $content ) {
 		$this->zip->addFromString( $fileName, $content );
 	}
 
