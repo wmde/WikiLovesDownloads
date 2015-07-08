@@ -1,0 +1,90 @@
+#container {
+    border: 1px solid #555555;
+    margin: 30px auto 0 auto;
+    padding: 0 20px 0 20px;
+    width: 700px;
+}
+
+header {
+    margin: 20px 0 0 0;
+    font-weight: bold;
+    font-size: 40px;
+    color: #555555;
+}
+
+p {
+    margin: 1px 0 0 0;
+    font-size: 16px;
+    color: #555555;
+}
+
+#errorBox {
+    border: 1px solid firebrick;
+    margin: 20px 0 0 0;
+    border-radius: 5px;
+    color: firebrick;
+    display: none;
+    width: 565px;
+    height: auto;
+}
+
+.errorMessage {
+    margin: 5px 0 5px 0;
+    text-align: center;
+}
+
+#form {
+    margin: 20px 0 30px 0;
+}
+
+#form div {
+    margin-bottom: 20px;
+}
+
+#form div span {
+    font-size: 16px;
+    display: block;
+    color: #555555;
+}
+
+#form div input {
+    display: block;
+}
+
+#form .category input {
+    border: 1px solid lightgray;
+}
+
+#form .number input {
+    border: 1px solid lightgray;
+}
+
+.category {
+    display: inline-block;
+    margin-right: 40px;
+}
+
+.category input {
+    width: 400px;
+    height: 27px;
+}
+
+.number {
+    display: inline-block;
+}
+
+.number input {
+    width: 140px;
+    height: 27px;
+}
+
+ul.tagit {
+    border: 1px solid lightgray;
+    margin-top: 0;
+    width: 583px;
+}
+
+.submit input {
+    border: 1px solid lightgray;
+    height: 40px;
+}
