@@ -4,63 +4,34 @@
 
 <head lang='de'>
     <meta charset='UTF-8'>
-    <title>Wiki Loves Downloader</title>
+    <title>WikiLovesDownloads</title>
 
-    <link rel='stylesheet' type='text/css' href='res/main.css'>
+    <link rel='stylesheet' type='text/css' href='res/css/main.css'>
     <link rel='stylesheet' type='text/css' href='lib/tagit/css/jquery.tagit.css'>
     <link rel='stylesheet' type='text/css' href='lib/tagit/css/tagit.ui-zendesk.css'>
 
     <script src='lib/JQuery/jquery-1.11.3.min.js' type='text/javascript'></script>
     <script src='lib/JQuery/jquery-ui.min.js' type='text/javascript'></script>
     <script src='lib/tagit/js/tag-it.js' type='text/javascript'></script>
-
-    <script type='text/javascript'>
-        $( document ).ready(function() {
-            $( '#form' ).submit(function( event ) {
-                var category = $( '#category' ).val();
-                var number = $( '#listQuantity' ).val();
-                var names = $( '#names' ).val();
-                var message;
-
-                if ( category === '' || number === '' ) {
-                    event.preventDefault();
-                    $( '#errorBox' ).show();
-                    $( '.errorMessage' ).remove();
-
-                    if ( category === '' ) {
-                        message = '- Die Kategorie darf nicht leer sein!';
-                        errorGen( message );
-                    }
-
-                    if ( number === '' ) {
-                        message = '- Die Nummer darf nicht leer sein!';
-                        errorGen( message );
-                    }
-
-                } else {
-                    $( '#form' ).submit();
-                }
-
-                function errorGen( message ) {
-                    $( '<p>' )
-                        .text( message )
-                        .addClass( 'errorMessage' )
-                        .appendTo( $( '#errorBox' ) );
-                }
-            });
-
-            $( '#names' ).tagit();
-            $( '.ui-helper-hidden-accessible' ).hide();
-        });
-    </script>
+    <script src='js/background.js' type='text/javascript'></script>
+    <script src='js/tagit-implementation.js' type='text/javascript'></script>
+    <script src='js/errors.js' type='text/javascript'></script>
 </head>
 
 <body>
 
+<div id='frontImage'></div>
+
+<div id='bar'>
+    <a href='https://wikimedia.de/wiki/Wikimedia_Deutschland:Impressum#impressum'>
+        <img src='res/img/wmde_logo_vert_weiß.png' />
+    </a>
+</div>
+
 <div id='container'>
 
-    <header>Wiki Loves Downloader</header>
-    <p>Teilt die Bilder einer kategorie entsprechend der Anzahl Juroren auf und generiert Textdatein mit Links zur Verwendung in einem Downloadmanager.</p>
+    <header>Wiki Loves Downloads</header>
+    <p>Teilt die Bilder einer Kategorie entsprechend der Anzahl Juroren auf und generiert Textdateien mit Links zur Verwendung in einem Downloadmanager.</p>
 
     <div id='errorBox'>
     </div>
@@ -79,8 +50,11 @@
 
         <div class='names'>
             <span>Auszusortierende Benutzernamen</span>
-            <input type='hidden' name='names' id='names'>
-        </div>
+
+		    <div>
+                <input type='hidden' name='names' id='names'>
+        	</div>
+	    </div>
 
         <div class='submit'>
             <input type='submit' id='submit' value='Download-Listen Generieren'>
@@ -88,6 +62,16 @@
 
     </form>
 
+</div>
+
+<div id='credits'>
+    <p id='license'></p>
+
+    <a href='https://github.com/wmde/WikiLovesDownloads'>
+        <p id='github'></p>
+    </a>
+
+    <p id='authors'></p>
 </div>
 
 </body>
