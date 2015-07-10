@@ -153,6 +153,10 @@ ul.tagit {
     font-size: 13px;
 }
 
+#credits a {
+    text-decoration: none;
+}
+
 #credits a p:hover {
     color: dodgerblue;
 }

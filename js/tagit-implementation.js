@@ -1,6 +1,6 @@
-$( document ).ready(function() {
+$( document ).ready( function() {
 
-    $('#names').tagit();
-    $('.ui-helper-hidden-accessible').hide();
+    $( '#names' ).tagit();
+    $( '.ui-helper-hidden-accessible' ).hide();
 
-});
+} );

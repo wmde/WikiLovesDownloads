@@ -1,6 +1,6 @@
-$( document ).ready(function() {
+$( document ).ready( function() {
 
-    $( '#form' ).submit(function( event ) {
+    $( '#form' ).submit( function( event ) {
 
         var category = $( '#category' ).val();
         var number = $( '#listQuantity' ).val();
@@ -35,4 +35,4 @@ $( document ).ready(function() {
 
     });
 
-});
+} );
