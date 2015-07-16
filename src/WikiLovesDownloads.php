@@ -63,7 +63,7 @@ class WikiLovesDownloads {
 		);
 
 		# @TODO: extend mediawiki api to accept parameter cmtype 
-		$this->images = $this->filterByNamespace( 'File' );
+		$this->images = $this->filterByNamespace( 6 );
 		
 		$images = array_keys( $this->images->toArray() );
 		while ( true ) {
@@ -141,13 +141,13 @@ class WikiLovesDownloads {
 	}
 
 	/**
-	 * @param string $namespaceTitle
+	 * @param int $namespaceId
 	 * @return Pages
 	 */
-	private function filterByNamespace( $namespaceTitle ) {
+	private function filterByNamespace( $namespaceId ) {
 		$filteredPages = new Pages();
 		foreach ( $this->images->toArray() as $imagePage ) {
-			if( strpos( $imagePage->getTitle(), $namespaceTitle ) === 0 ) {
+			if( $imagePage->getPageIdentifier()->getTitle()->getNs() === $namespaceId ) {
 				$filteredPages->addPage( $imagePage );
 			}
 		}
