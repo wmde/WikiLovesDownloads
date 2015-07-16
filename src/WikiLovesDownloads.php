@@ -34,9 +34,7 @@ class WikiLovesDownloads {
 	 * @param array $userFilter
 	 */
 	public function __construct( array $userFilter = null ) {
-		echo "WikiLovesDownloads v0.1\n";
 		$this->api = new MediawikiApi( API_URL );
-		echo "API client instanciated using " . API_URL . "\n";
 		$this->services = new MediawikiFactory( $this->api );
 
 		$this->userFilter = $userFilter;
@@ -48,13 +46,7 @@ class WikiLovesDownloads {
 	 * @param $password
 	 */
 	public function doApiLogin( $username, $password ) {
-		echo "Logging in " . $username . "\n";
 		$this->loggedIn = $this->api->login( new ApiUser( $username, $password ) );
-		if ( $this->loggedIn ) {
-			echo "Successfully logged in.\n";
-		} else {
-			echo "Login failed, continuing anonymously.\n";
-		}
 	}
 
 	/**
@@ -62,13 +54,10 @@ class WikiLovesDownloads {
 	 * @return bool
 	 */
 	public function loadCategoryMembers( $topCategory ) {
-		echo "Fetching category members of " . $topCategory . "\n";
 		$this->images = $this->services->newPageListGetter()->getPageListFromCategoryName( $topCategory );
-		echo "Found " . count( $this->images->toArray() ) . " pages in specified category.\n";
 		
 		# @TODO: extend mediawiki api to accept parameter cmtype 
 		$this->images = $this->filterByNamespace( 'File' );
-		echo count( $this->images->toArray() ) . " pages left after filtering by namespace 6.\n";
 		
 		$images = array_keys( $this->images->toArray() );
 		while ( true ) {
@@ -143,7 +132,6 @@ class WikiLovesDownloads {
 			$this->images->addPage( $pageObject );
 		}
 		$this->numImageInfoRetrieved += count( $chunk );
-		echo "Retrieving image info. " . ( count( $this->images->toArray() ) - $this->numImageInfoRetrieved ) . " remaining.\n";
 	}
 
 	/**
