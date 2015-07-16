@@ -2,6 +2,7 @@
 use Mediawiki\Api\ApiUser;
 use Mediawiki\Api\MediawikiApi;
 use Mediawiki\Api\MediawikiFactory;
+use Mediawiki\Api\Options\ListCategoryMembersOptions;
 use Mediawiki\DataModel\Pages;
 
 class WikiLovesDownloads {
@@ -32,11 +33,13 @@ class WikiLovesDownloads {
 
 	/**
 	 * @param array $userFilter
+	 * @param ListCategoryMembersOptions $options
 	 */
-	public function __construct( array $userFilter = null ) {
+	public function __construct( array $userFilter = null, ListCategoryMembersOptions $options = null ) {
 		$this->api = new MediawikiApi( API_URL );
 		$this->services = new MediawikiFactory( $this->api );
 
+		$this->options = $options ?: new ListCategoryMembersOptions();
 		$this->userFilter = $userFilter;
 	}
 
@@ -54,8 +57,11 @@ class WikiLovesDownloads {
 	 * @return bool
 	 */
 	public function loadCategoryMembers( $topCategory ) {
-		$this->images = $this->services->newPageListGetter()->getPageListFromCategoryName( $topCategory );
-		
+		$this->images = $this->services->newPageListGetter()->getPageListFromCategoryName(
+			$topCategory,
+			$this->options
+		);
+
 		# @TODO: extend mediawiki api to accept parameter cmtype 
 		$this->images = $this->filterByNamespace( 'File' );
 		
