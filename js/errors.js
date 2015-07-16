@@ -13,12 +13,12 @@ $( document ).ready( function() {
             $( '.errorMessage' ).remove();
 
             if ( category === '' ) {
-                message = '- Kategorie darf nicht leer sein!';
+                message = 'Kategorie darf nicht leer sein!';
                 errorGen( message );
             }
 
             if ( number === '' ) {
-                message = '- Anzahl der Listen darf nicht leer sein!';
+                message = 'Anzahl der Listen darf nicht leer sein!';
                 errorGen( message );
             }
 

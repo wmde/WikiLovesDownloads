@@ -8,11 +8,8 @@ $( document ).ready( function() {
 
     $( 'ul.tagit' )
         .focusin( function() {
-        $( '#hint' ).show();
-        } )
-        .focusout( function() {
-            $( '#hint' ).hide();
-    } );
+            $( '#hint' ).show();
+        } );
 
 } );
 
