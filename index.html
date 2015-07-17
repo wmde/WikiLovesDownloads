@@ -31,7 +31,7 @@
 <div id='container'>
 
     <header>Wiki Loves Downloads</header>
-    <p>Teilt die Bilder einer Kategorie entsprechend der Anzahl Juroren auf und generiert Textdateien mit Links zur Verwendung in einem Downloadmanager.</p>
+    <p>Teilt die Bilder einer Kategorie entsprechend der Anzahl Listen auf und generiert Textdateien mit Links zur Verwendung in einem Downloadmanager.</p>
 
     <div id='errorBox'>
     </div>
@@ -39,7 +39,7 @@
     <form action='src/initial.php' method='POST' id='form'>
 
         <div class='category'>
-            <span>Kategorie (z.B.: <i>Wiki Loves Monuments 2015</i>)</span>
+            <span>Kategorie (z.B.: <i>Birds at Weltvogelpark Walsrode</i>)</span>
             <input type='text' name='category' id='category'>
         </div>
 
@@ -51,13 +51,15 @@
         <div class='names'>
             <span>Auszusortierende Benutzernamen</span>
 
-		    <div>
+            <div>
                 <input type='hidden' name='names' id='names'>
         	</div>
-	    </div>
+
+            <p id='hint'>Enter drücken um mehrere Namen hinzuzufügen</p>
+        </div>
 
         <div class='submit'>
-            <input type='submit' id='submit' value='Download-Listen Generieren'>
+            <input type='submit' id='submit' value='Download-Listen generieren'>
         </div>
 
     </form>
