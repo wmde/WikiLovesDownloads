@@ -8,8 +8,9 @@
 		}
 	],
 	"license": "GPL-2.0+",
+	"minimum-stability": "dev",
 	"require": {
-		"addwiki/mediawiki-api": "0.3"
+		"addwiki/mediawiki-api": "dev-master"
 	},
 	"autoload": {
 		"psr-4": {

@@ -1,4 +1,6 @@
 <?php
+use Mediawiki\Api\Options\ListCategoryMembersOptions;
+
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
@@ -18,7 +20,10 @@ $listQuantity = $_POST[ 'listQuantity' ];
 $userFilter = explode( ',' , $_POST[ 'names' ] );
 $downloadCategory = "category:" . $category;
 
-$wld = new WikiLovesDownloads( $userFilter );
+# library's default is 5000, which only works for registered bots
+$options = new ListCategoryMembersOptions();
+$options->setLimit( 500 );
+$wld = new WikiLovesDownloads( $userFilter, $options );
 $create = new ArchiveCreator();
 
 if ( defined( 'API_USER' ) && defined( 'API_PASSWORD' ) ) {

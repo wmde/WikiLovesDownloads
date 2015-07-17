@@ -2,19 +2,24 @@
 use Mediawiki\Api\ApiUser;
 use Mediawiki\Api\MediawikiApi;
 use Mediawiki\Api\MediawikiFactory;
+use Mediawiki\Api\Options\ListCategoryMembersOptions;
+use Mediawiki\Api\SimpleRequest;
+use Mediawiki\DataModel\Page;
 use Mediawiki\DataModel\Pages;
 
 class WikiLovesDownloads {
-	
+
+	const NAMESPACE_FILE = 6;
+
 	/** @var MediawikiApi instance of the api client */
 	private $api = '';
 
 	/** @var Pages collection of images as returned by wikipedia::categorymembers() */
 	private $images = array();
-	
+
 	/** @var array array of lists of files */
 	private $urls = array();
-	
+
 	/** @var true on successful login */
 	private $loggedIn = false;
 
@@ -23,22 +28,22 @@ class WikiLovesDownloads {
 
 	/** @var int number of images created by any filtered user */
 	private $numImagesByFilteredUsers = 0;
-	
+
 	/** @var MediawikiFactory */
 	private $services;
-	
+
 	/** @var int number of images for which the image info had been retrieved */
 	private $numImageInfoRetrieved = 0;
 
 	/**
 	 * @param array $userFilter
+	 * @param ListCategoryMembersOptions $options
 	 */
-	public function __construct( array $userFilter = null ) {
-		echo "WikiLovesDownloads v0.1\n";
+	public function __construct( array $userFilter = null, ListCategoryMembersOptions $options = null ) {
 		$this->api = new MediawikiApi( API_URL );
-		echo "API client instanciated using " . API_URL . "\n";
 		$this->services = new MediawikiFactory( $this->api );
 
+		$this->options = $options ?: new ListCategoryMembersOptions();
 		$this->userFilter = $userFilter;
 	}
 
@@ -48,13 +53,7 @@ class WikiLovesDownloads {
 	 * @param $password
 	 */
 	public function doApiLogin( $username, $password ) {
-		echo "Logging in " . $username . "\n";
 		$this->loggedIn = $this->api->login( new ApiUser( $username, $password ) );
-		if ( $this->loggedIn ) {
-			echo "Successfully logged in.\n";
-		} else {
-			echo "Login failed, continuing anonymously.\n";
-		}
 	}
 
 	/**
@@ -62,14 +61,14 @@ class WikiLovesDownloads {
 	 * @return bool
 	 */
 	public function loadCategoryMembers( $topCategory ) {
-		echo "Fetching category members of " . $topCategory . "\n";
-		$this->images = $this->services->newPageListGetter()->getPageListFromCategoryName( $topCategory );
-		echo "Found " . count( $this->images->toArray() ) . " pages in specified category.\n";
-		
+		$this->images = $this->services->newPageListGetter()->getPageListFromCategoryName(
+			$topCategory,
+			$this->options
+		);
+
 		# @TODO: extend mediawiki api to accept parameter cmtype 
-		$this->images = $this->filterByNamespace( 'File' );
-		echo count( $this->images->toArray() ) . " pages left after filtering by namespace 6.\n";
-		
+		$this->images = $this->filterByNamespace( self::NAMESPACE_FILE );
+
 		$images = array_keys( $this->images->toArray() );
 		while ( true ) {
 			$chunk = array_splice( $images, 0, 50 );
@@ -79,7 +78,7 @@ class WikiLovesDownloads {
 			$this->extendWithImageInfo( $chunk );
 		}
 	}
-	
+
 	/**
 	 * iterate through the collection of pages and distribute the urls to a given number of lists
 	 */
@@ -90,7 +89,7 @@ class WikiLovesDownloads {
 			}
 		}
 	}
-	
+
 	public function getUrls( $numberOfLists = 1 ) {
 		$downloadLists = array_fill( 0, $numberOfLists, array() );
 		$currentListIndex = 0;
@@ -107,17 +106,17 @@ class WikiLovesDownloads {
 
 	/**
 	 * Looks up the uploader of the file and returns true if the author should be filtered
-	 * @param array $image
+	 * @param Page $image
 	 * @return bool
 	 */
-	private function isImageOfFilteredUser( $image ) {
+	private function isImageOfFilteredUser( Page $image ) {
 		if ( in_array( $image->imageInfo['user'], $this->userFilter ) ) {
 			$this->numImagesByFilteredUsers++;
 			return true;
 		}
 		return false;
 	}
-	
+
 	/**
 	 * @return int
 	 */
@@ -127,15 +126,15 @@ class WikiLovesDownloads {
 
 	private function extendWithImageInfo( $chunk ) {
 		# @todo extend wikimedia api to support files
-		$imageInfo = $this->api->getAction(
+		$imageInfo = $this->api->getRequest( new SimpleRequest(
 			'query',
 			array(
 				'prop' => 'imageinfo',
 				'iiprop' => 'url|user|timestamp',
 				'pageids' => implode( '|', $chunk ),
 			)
-		);
-		
+		) );
+
 		# add image info to the page objects and re-add those to the collection
 		foreach( $imageInfo['query']['pages'] as $pageId => $page ) {
 			$pageObject = $this->images->get( $pageId );
@@ -143,17 +142,16 @@ class WikiLovesDownloads {
 			$this->images->addPage( $pageObject );
 		}
 		$this->numImageInfoRetrieved += count( $chunk );
-		echo "Retrieving image info. " . ( count( $this->images->toArray() ) - $this->numImageInfoRetrieved ) . " remaining.\n";
 	}
 
 	/**
-	 * @param string $namespaceTitle
+	 * @param int $namespaceId
 	 * @return Pages
 	 */
-	private function filterByNamespace( $namespaceTitle ) {
+	private function filterByNamespace( $namespaceId ) {
 		$filteredPages = new Pages();
 		foreach ( $this->images->toArray() as $imagePage ) {
-			if( strpos( $imagePage->getTitle(), $namespaceTitle ) === 0 ) {
+			if( $imagePage->getPageIdentifier()->getTitle()->getNs() === $namespaceId ) {
 				$filteredPages->addPage( $imagePage );
 			}
 		}
