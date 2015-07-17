@@ -106,10 +106,10 @@ class WikiLovesDownloads {
 
 	/**
 	 * Looks up the uploader of the file and returns true if the author should be filtered
-	 * @param array $image
+	 * @param Page $image
 	 * @return bool
 	 */
-	private function isImageOfFilteredUser( $image ) {
+	private function isImageOfFilteredUser( Page $image ) {
 		if ( in_array( $image->imageInfo['user'], $this->userFilter ) ) {
 			$this->numImagesByFilteredUsers++;
 			return true;
@@ -126,14 +126,14 @@ class WikiLovesDownloads {
 
 	private function extendWithImageInfo( $chunk ) {
 		# @todo extend wikimedia api to support files
-		$imageInfo = $this->api->getAction(
+		$imageInfo = $this->api->getRequest( new SimpleRequest(
 			'query',
 			array(
 				'prop' => 'imageinfo',
 				'iiprop' => 'url|user|timestamp',
 				'pageids' => implode( '|', $chunk ),
 			)
-		);
+		) );
 
 		# add image info to the page objects and re-add those to the collection
 		foreach( $imageInfo['query']['pages'] as $pageId => $page ) {
