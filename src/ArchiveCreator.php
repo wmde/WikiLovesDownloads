@@ -46,7 +46,6 @@ class ArchiveCreator {
 		$this->zip->close();
 		header( 'Content-Type: application/zip' );
 		header( 'Content-Disposition: attachment; filename=' . $this->zipName );
-		header( 'Content-Length: ' . filesize( $this->zipPath ) );
 		header( 'Location: ' . $this->zipPath );
 	}
 
