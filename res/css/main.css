@@ -31,7 +31,7 @@ body {
 
 #container {
     background-color: rgba(0, 0, 0, 0.5);
-    padding: 10px 20px 10px 20px;
+    padding: 10px 0 10px 20px;
     margin: 20px auto 0 auto;
     width: 700px;
 }
@@ -53,11 +53,12 @@ p {
 
 #errorBox {
     border: solid 1px #FF0700;
+    background-color: rgba(0, 0, 0, 0.5);
     padding: 5px 5px 5px 5px;
     margin: 20px 0 0 0;
     border-radius: 5px;
     display: none;
-    width: 623px;
+    width: 663px;
     height: auto;
 }
 
@@ -102,7 +103,7 @@ p {
 }
 
 .category input {
-    width: 420px;
+    width: 440px;
     height: 27px;
 }
 
@@ -111,7 +112,7 @@ p {
 }
 
 .number input {
-    width: 160px;
+    width: 180px;
     height: 27px;
 }
 
@@ -120,7 +121,7 @@ ul.tagit {
     border: 1px solid lightgray;
     margin-top: 0;
     margin-bottom: 0;
-    width: 623px;
+    width: 663px;
 	cursor: text;
 }
 
