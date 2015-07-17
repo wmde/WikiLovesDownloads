@@ -10,16 +10,16 @@ use Mediawiki\DataModel\Pages;
 class WikiLovesDownloads {
 
 	const NAMESPACE_FILE = 6;
-	
+
 	/** @var MediawikiApi instance of the api client */
 	private $api = '';
 
 	/** @var Pages collection of images as returned by wikipedia::categorymembers() */
 	private $images = array();
-	
+
 	/** @var array array of lists of files */
 	private $urls = array();
-	
+
 	/** @var true on successful login */
 	private $loggedIn = false;
 
@@ -28,10 +28,10 @@ class WikiLovesDownloads {
 
 	/** @var int number of images created by any filtered user */
 	private $numImagesByFilteredUsers = 0;
-	
+
 	/** @var MediawikiFactory */
 	private $services;
-	
+
 	/** @var int number of images for which the image info had been retrieved */
 	private $numImageInfoRetrieved = 0;
 
@@ -68,7 +68,7 @@ class WikiLovesDownloads {
 
 		# @TODO: extend mediawiki api to accept parameter cmtype 
 		$this->images = $this->filterByNamespace( self::NAMESPACE_FILE );
-		
+
 		$images = array_keys( $this->images->toArray() );
 		while ( true ) {
 			$chunk = array_splice( $images, 0, 50 );
@@ -78,7 +78,7 @@ class WikiLovesDownloads {
 			$this->extendWithImageInfo( $chunk );
 		}
 	}
-	
+
 	/**
 	 * iterate through the collection of pages and distribute the urls to a given number of lists
 	 */
@@ -89,7 +89,7 @@ class WikiLovesDownloads {
 			}
 		}
 	}
-	
+
 	public function getUrls( $numberOfLists = 1 ) {
 		$downloadLists = array_fill( 0, $numberOfLists, array() );
 		$currentListIndex = 0;
@@ -116,7 +116,7 @@ class WikiLovesDownloads {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * @return int
 	 */
@@ -134,7 +134,7 @@ class WikiLovesDownloads {
 				'pageids' => implode( '|', $chunk ),
 			)
 		);
-		
+
 		# add image info to the page objects and re-add those to the collection
 		foreach( $imageInfo['query']['pages'] as $pageId => $page ) {
 			$pageObject = $this->images->get( $pageId );
