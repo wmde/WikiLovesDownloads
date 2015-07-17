@@ -52,6 +52,8 @@ p {
 }
 
 #errorBox {
+    border: solid 1px #FF0700;
+    padding: 5px 5px 5px 5px;
     margin: 20px 0 0 0;
     border-radius: 5px;
     display: none;
