@@ -3,9 +3,13 @@ use Mediawiki\Api\ApiUser;
 use Mediawiki\Api\MediawikiApi;
 use Mediawiki\Api\MediawikiFactory;
 use Mediawiki\Api\Options\ListCategoryMembersOptions;
+use Mediawiki\Api\SimpleRequest;
+use Mediawiki\DataModel\Page;
 use Mediawiki\DataModel\Pages;
 
 class WikiLovesDownloads {
+
+	const NAMESPACE_FILE = 6;
 	
 	/** @var MediawikiApi instance of the api client */
 	private $api = '';
@@ -63,7 +67,7 @@ class WikiLovesDownloads {
 		);
 
 		# @TODO: extend mediawiki api to accept parameter cmtype 
-		$this->images = $this->filterByNamespace( 6 );
+		$this->images = $this->filterByNamespace( self::NAMESPACE_FILE );
 		
 		$images = array_keys( $this->images->toArray() );
 		while ( true ) {
