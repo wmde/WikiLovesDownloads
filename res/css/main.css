@@ -51,6 +51,10 @@ p {
     color: ghostwhite;
 }
 
+#description {
+    width: 690px;
+}
+
 #errorBox {
     border: solid 1px #FF0700;
     background-color: rgba(0, 0, 0, 0.5);
