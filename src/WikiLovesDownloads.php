@@ -1,11 +1,12 @@
 <?php
-use Mediawiki\Api\ApiUser;
-use Mediawiki\Api\MediawikiApi;
-use Mediawiki\Api\MediawikiFactory;
-use Mediawiki\Api\Options\ListCategoryMembersOptions;
-use Mediawiki\Api\SimpleRequest;
-use Mediawiki\DataModel\Page;
-use Mediawiki\DataModel\Pages;
+use \Addwiki\Mediawiki\Api\ApiUser;
+use \Addwiki\Mediawiki\Api\Client\Action\ActionApi;
+use \Addwiki\Mediawiki\Api\Client\Action\Request\ActionRequest;
+use \Addwiki\Mediawiki\Api\Client\Auth\UserAndPassword;
+use \Addwiki\Mediawiki\Api\MediawikiFactory;
+use \Addwiki\Mediawiki\Api\SimpleRequest;
+use \Addwiki\Mediawiki\DataModel\Page;
+use \Addwiki\Mediawiki\DataModel\Pages;
 
 class WikiLovesDownloads {
 
@@ -37,23 +38,11 @@ class WikiLovesDownloads {
 
 	/**
 	 * @param array $userFilter
-	 * @param ListCategoryMembersOptions $options
 	 */
-	public function __construct( array $userFilter = null, ListCategoryMembersOptions $options = null ) {
-		$this->api = new MediawikiApi( API_URL );
+	public function __construct( array $userFilter = null ) {
+		$this->api = new ActionApi( API_URL, $this->getCredentials() );
 		$this->services = new MediawikiFactory( $this->api );
-
-		$this->options = $options ?: new ListCategoryMembersOptions();
 		$this->userFilter = $userFilter;
-	}
-
-	/**
-	 * Performs a login into the API
-	 * @param $username
-	 * @param $password
-	 */
-	public function doApiLogin( $username, $password ) {
-		$this->loggedIn = $this->api->login( new ApiUser( $username, $password ) );
 	}
 
 	/**
@@ -63,7 +52,7 @@ class WikiLovesDownloads {
 	public function loadCategoryMembers( $topCategory ) {
 		$this->images = $this->services->newPageListGetter()->getPageListFromCategoryName(
 			$topCategory,
-			$this->options
+			[ 'cmlimit' => '500' ]
 		);
 
 		# @TODO: extend mediawiki api to accept parameter cmtype 
@@ -126,7 +115,7 @@ class WikiLovesDownloads {
 
 	private function extendWithImageInfo( $chunk ) {
 		# @todo extend wikimedia api to support files
-		$imageInfo = $this->api->getRequest( new SimpleRequest(
+		$imageInfo = $this->api->request( ActionRequest::simpleGet(
 			'query',
 			array(
 				'prop' => 'imageinfo',
@@ -162,5 +151,12 @@ class WikiLovesDownloads {
 		return ( defined( 'FILE_PREFIX' ) ? FILE_PREFIX : '' ) .
 			str_pad( ( intval( $key ) + 1 ), $numDigits, '0', STR_PAD_LEFT ) .
 			'.txt';
+	}
+
+	private function getCredentials() {
+		if ( !empty( API_USER ) && !empty( API_PASSWORD ) ) {
+			return new UserAndPassword( API_USER, API_PASSWORD );
+		}
+		return null;
 	}
 }
