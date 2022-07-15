@@ -1,5 +1,5 @@
 {
-	"name": "WikiLovesDownloads",
+	"name": "wmde/wikilovesdownloads",
 	"description": "Download helper for grabbing file from The Commons",
 	"keywords": ["commons", "downloader"],
 	"authors": [
@@ -11,7 +11,7 @@
 	"minimum-stability": "dev",
 	"prefer-stable": true,
 	"require": {
-		"addwiki/mediawiki-api": "dev-master"
+		"addwiki/mediawiki-api": "dev-main"
 	},
 	"autoload": {
 		"psr-4": {
